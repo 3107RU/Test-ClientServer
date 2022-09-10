@@ -34,21 +34,19 @@ namespace netlib
     class Server
     {
         class Impl;
-        std::unique_ptr<Impl> impl;
+        std::shared_ptr<Impl> impl;
 
     public:
         Server(OnMsgFn onMsg);
-        ~Server();
     };
 
     class Client
     {
         class Impl;
-        std::unique_ptr<Impl> impl;
+        std::shared_ptr<Impl> impl;
 
     public:
-        Client(std::string_view address);
-        ~Client();
+        Client(const std::string &address);
         bool isConnected();
         bool send(std::shared_ptr<Msg> msg);
         void stop();

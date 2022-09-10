@@ -5,7 +5,7 @@ namespace netorder
 {
 
   template <typename T>
-  constexpr T convert(T value) noexcept
+  T convert(T value) noexcept
   {
 #if __BYTE_ORDER == __LITTLE_ENDIAN
     char *ptr = reinterpret_cast<char *>(&value);
@@ -18,8 +18,8 @@ namespace netorder
   void convert(T first, T last) noexcept
   {
 #if __BYTE_ORDER == __LITTLE_ENDIAN
-    std::for_each(first, last, [](auto &value)
-                  { value = convert(value); });
+    for (auto it = first; it != last; it++)
+        *it = convert(*it);
 #endif
   }
 

@@ -151,11 +151,7 @@ namespace netlib
 
 	Server::Server(OnMsgFn onMsg)
 	{
-		impl = std::make_unique<Impl>(onMsg);
-	}
-
-	Server::~Server()
-	{
+		impl = std::make_shared<Impl>(onMsg);
 	}
 
 	class Client::Impl
@@ -273,7 +269,7 @@ namespace netlib
 		}
 
 	public:
-		Impl(std::string_view address)
+		Impl(const std::string &address)
 			: address(address),
 			  resolver(ios),
 			  socket(ios)
@@ -320,13 +316,9 @@ namespace netlib
 		}
 	};
 
-	Client::Client(std::string_view address)
+	Client::Client(const std::string &address)
 	{
-		impl = std::make_unique<Impl>(address);
-	}
-
-	Client::~Client()
-	{
+		impl = std::make_shared<Impl>(address);
 	}
 
 	bool Client::isConnected()
